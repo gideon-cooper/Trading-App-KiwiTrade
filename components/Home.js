@@ -1,9 +1,10 @@
 import React from 'react';
-
+import Nav from './Nav'
 import {
   SafeAreaView,
   StyleSheet,
   ScrollView,
+  RefreshControl,
   View,
   Text,
   Image,
@@ -13,7 +14,7 @@ import {
   Button,
 } from 'react-native';
 
-const Home = () => {
+const Home = ({navigation}) => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.main}>
@@ -39,18 +40,7 @@ const Home = () => {
           </View>
         </ScrollView>
       </View>
-      <View style={styles.nav}>
-        <TouchableOpacity style={styles.navItem}>
-          <View>
-            <Text style={styles.navText}>Home</Text>
-          </View>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.navItem}>
-          <View style={styles.navItem}>
-            <Text style={styles.navText}>Profile</Text>
-          </View>
-        </TouchableOpacity>
-      </View>
+      <Nav navigation={navigation}/>
     </SafeAreaView>
   );
 };
@@ -84,6 +74,7 @@ const styles = StyleSheet.create({
   itemBottom: {
     flex: 1,
     backgroundColor: 'purple',
+    padding: 10,
   },
   title: {
     fontSize: 26,
