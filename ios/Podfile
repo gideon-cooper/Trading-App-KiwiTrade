@@ -11,7 +11,6 @@ target 'KiwiTrade' do
   pod 'RNGestureHandler', :path => '../node_modules/react-native-gesture-handler'
 
 
-  pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
 
   target 'KiwiTradeTests' do
     inherit! :complete
@@ -30,7 +29,7 @@ end
 
 target 'KiwiTrade-tvOS' do
   # Pods for KiwiTrade-tvOS
-
+  pod 'Firebase/Analytics'
   target 'KiwiTrade-tvOSTests' do
     inherit! :search_paths
     # Pods for testing

@@ -1,5 +1,6 @@
 import { NavigationContainer } from '@react-navigation/native';
-import React from 'react';
+import React, {useState} from 'react';
+import {firebase} from "../firebase/config"
 
 import {
   SafeAreaView,
@@ -13,6 +14,35 @@ import {
 } from 'react-native';
 
 const Login = ({navigation}) => {
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const onLoginPress = () => {
+    firebase
+        .auth()
+        .signInWithEmailAndPassword(email, password)
+        .then((response) => {
+            const uid = response.user.uid
+            const usersRef = firebase.firestore().collection('users')
+            usersRef
+                .doc(uid)
+                .get()
+                .then(firestoreDocument => {
+                    if (!firestoreDocument.exists) {
+                        alert("User does not exist.")
+                        return;
+                    }
+                    const user = firestoreDocument.data()
+                    navigation.navigate('Home', {user})
+                })
+                .catch(error => {
+                    alert(error)
+                });
+        })
+        .catch(error => {
+            alert(error)
+        })
+}
+
   return (
     <View style={styles.container}>
       <View style={styles.inputContainer}>
@@ -21,15 +51,16 @@ const Login = ({navigation}) => {
         </Text>
         <TextInput
           style={styles.input}
-          placeholder="Enter username"></TextInput>
+          onChangeText={(text) => setEmail(text)}
+          placeholder="Enter email"></TextInput>
         <TextInput
           secureTextEntry={true}
-     
+          onChangeText={(text) => setPassword(text)}
           style={styles.input}
           placeholder="Enter password"></TextInput>
-          <Button onPress={()=> navigation.navigate("Home")} color='green' title="Log in"/>
+          <Button onPress={() => onLoginPress()} color='green' title="Log in"/>
           <View style={styles.button}>
-             <Button color='green' title="Register"/>
+             <Button onPress={()=> navigation.navigate("Register")}  color='green' title="Register"/>
           </View>
       </View>
     </View>
