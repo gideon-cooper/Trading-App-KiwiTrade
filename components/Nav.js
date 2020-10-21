@@ -8,15 +8,16 @@ import {
     TouchableOpacity,
   } from 'react-native';
   
-const Nav = ({navigation}) => {
+const Nav = ( props) => {
+  console.log(props)
     return(
         <View style={styles.nav}>
-        <TouchableOpacity onPress={()=> navigation.navigate("Home")} style={styles.navItem}>
+        <TouchableOpacity onPress={()=> props.navigation.navigate("Home")} style={styles.navItem}>
           <View>
             <Text style={styles.navText}>Home</Text>
           </View>
         </TouchableOpacity>
-        <TouchableOpacity onPress={()=> navigation.navigate("Profile")} style={styles.navItem}>
+        <TouchableOpacity onPress={()=> props.navigation.navigate("Profile", {user: props.user})} style={styles.navItem}>
           <View style={styles.navItem}>
             <Text style={styles.navText}>Profile</Text>
           </View>

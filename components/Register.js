@@ -36,6 +36,10 @@ export default function Register({navigation}) {
                     .doc(uid)
                     .set(data)
                     .then(() => {
+                        navigation.reset({
+                          index: 0,
+                          routes: [{ name: 'Home' }],
+                        });
                         navigation.navigate('Home', {user: data})
                     })
                     .catch((error) => {

@@ -1,7 +1,7 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import Nav from './Nav'
-
-
+import {firebase} from "../firebase/config"
+import Listing from "./Listing"
 import {
   SafeAreaView,
   StyleSheet,
@@ -16,33 +16,26 @@ import {
   Button,
 } from 'react-native';
 
-const Home = ({navigation}) => {
+const Home = (props) => {
+  const [listings, setListings] = useState([])
+  useEffect(() => {
+    firebase.firestore().collection("listings")
+      .get().then((listing) => listing.docs.map((item) => {
+        setListings(listings => [...listings,item.data()])
+      }))
+  }, [])
+  console.log(listings,"geg")
+  console.log(props)
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.main}>
         <ScrollView style={styles.itemContainer}>
-          <View style={styles.item}>
-            <View style={styles.imageContainer}></View>
-            <View style={styles.itemBottom}>
-              <Text style={styles.title}>HEYYYYYYYYY</Text>
-              <Text style={styles.price}>$1200</Text>
-            </View>
-          </View>
-          <View style={styles.item}>
-            <View style={styles.imageContainer}></View>
-            <View style={styles.itemBottom}></View>
-          </View>
-          <View style={styles.item}>
-            <View style={styles.imageContainer}></View>
-            <View style={styles.itemBottom}></View>
-          </View>
-          <View style={styles.item}>
-            <View style={styles.imageContainer}></View>
-            <View style={styles.itemBottom}></View>
-          </View>
+         {listings.map((listing) => {
+           return <Listing key={listing.Title} listing={listing}/>
+         })}
         </ScrollView>
       </View>
-      <Nav navigation={navigation}/>
+      <Nav user={props.user} navigation={props.navigation}/>
     </SafeAreaView>
   );
 };
@@ -62,28 +55,6 @@ const styles = StyleSheet.create({
   itemContainer: {
     width: '90%',
     display: 'flex',
-  },
-  item: {
-    width: '100%',
-    height: 250,
-    backgroundColor: 'red',
-    marginTop: 20,
-  },
-  imageContainer: {
-    flex: 2,
-    backgroundColor: 'yellow',
-  },
-  itemBottom: {
-    flex: 1,
-    backgroundColor: 'purple',
-    padding: 10,
-  },
-  title: {
-    fontSize: 26,
-  },
-  price: {
-    color: 'green',
-    fontSize: 22,
   },
   nav: {
     width: '100%',

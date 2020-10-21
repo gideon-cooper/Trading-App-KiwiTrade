@@ -32,6 +32,10 @@ const Login = ({navigation}) => {
                         return;
                     }
                     const user = firestoreDocument.data()
+                    navigation.reset({
+                      index: 0,
+                      routes: [{ name: 'Home' }],
+                    });
                     navigation.navigate('Home', {user})
                 })
                 .catch(error => {
