@@ -4,6 +4,7 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import Login from './components/Login';
 import Home from './components/Home';
+import AddListing from "./components/AddListing"
 import Profile from './components/Profile';
 import Register from './components/Register';
 import {firebase} from "./firebase/config"
@@ -46,6 +47,7 @@ const App = (props) => {
       <Stack.Navigator>
             <Stack.Screen name="Login" component={Login} />
             <Stack.Screen name="Profile" component={Profile} />
+            <Stack.Screen name="AddListing" component={AddListing} />
             <Stack.Screen name="Home">
               {(props) => <Home {...props} user={user} />}
             </Stack.Screen>

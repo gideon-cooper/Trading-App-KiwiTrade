@@ -35,7 +35,7 @@ const Profile = (props) => {
           </View>
           <View style={styles.informationContainer}>
             <Text style={styles.email}>{props.route.params.user.email}</Text>
-            <Button color='green' title="Add listing"></Button>
+            <Button color='green' onPress={()=> props.navigation.navigate('AddListing')} title="Add listing"></Button>
             <View style={styles.button}>
               <Button color='green' onPress={() => handlePress()}title="Log out"></Button>
             </View>
