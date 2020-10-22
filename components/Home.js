@@ -1,6 +1,7 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import Nav from './Nav'
 import {firebase} from "../firebase/config"
+import {ListingContext} from "../context/ListingContext"
 import Listing from "./Listing"
 import {
   SafeAreaView,
@@ -17,11 +18,12 @@ import {
 } from 'react-native';
 
 const Home = (props) => {
+  const [listingsArray, setListingsArray] = useContext(ListingContext)
   const [listings, setListings] = useState([])
   useEffect(() => {
     firebase.firestore().collection("listings")
       .get().then((listing) => listing.docs.map((item) => {
-        setListings(listings => [...listings,item.data()])
+        setListingsArray(listingsArray => [...listingsArray,item.data()])
       }))
   }, [])
   console.log(listings,"geg")
@@ -30,7 +32,7 @@ const Home = (props) => {
     <SafeAreaView style={styles.container}>
       <View style={styles.main}>
         <ScrollView style={styles.itemContainer}>
-         {listings.map((listing) => {
+         {listingsArray.map((listing) => {
            return <Listing key={listing.Title} listing={listing}/>
          })}
         </ScrollView>

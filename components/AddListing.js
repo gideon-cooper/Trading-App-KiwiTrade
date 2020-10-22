@@ -1,6 +1,7 @@
-import React, {useState} from 'react'
+import React, {useState, useContext} from 'react'
 import {firebase} from "../firebase/config"
 import ImagePicker from 'react-native-image-picker'
+import {ListingContext} from "../context/ListingContext"
 import {
     SafeAreaView,
     StyleSheet,
@@ -15,7 +16,10 @@ import {
     Button,
   } from 'react-native';
   
-export default function AddListing() {
+export default function AddListing(props) {
+    console.log(props)
+    const [listingsArray, setListingsArray] = useContext(ListingContext)
+   
     const [Title, setTitle] = useState('')
     const [Price, setPrice] = useState(Number(''))
     const [Image, setImage] = useState('')
@@ -29,7 +33,19 @@ export default function AddListing() {
           }
         })
       }
-    console.log(Title, Price, Image)
+    const handleSubmit= () => {
+        const data = {
+            Title,Price,Image
+        }
+        const listingsRef = firebase.firestore().collection('listings')
+        console.log(data)
+        listingsRef
+            .add(data).then(() => {
+                setListingsArray(listingsArray => [...listingsArray,data])
+                props.navigation.navigate('Home')
+            }   
+            )
+    }
     return (
         
         <View style={styles.container}>
@@ -41,7 +57,7 @@ export default function AddListing() {
                 <TextInput name='Price' onChangeText={(text) => setPrice(text)} style={styles.input} placeholder="Enter Price"></TextInput>
                 <Button color='green' title="Choose Photo" onPress={() => handleChoosePhoto()} />
                 <View style={styles.button}>
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={() => handleSubmit()}>
                         <Text style={styles.buttonText}>Submit</Text>
                     </TouchableOpacity> 
                 </View>

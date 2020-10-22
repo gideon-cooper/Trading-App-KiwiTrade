@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import 'react-native-gesture-handler';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
+import {ListingProvider} from "./context/ListingContext"
 import Login from './components/Login';
 import Home from './components/Home';
 import AddListing from "./components/AddListing"
@@ -43,17 +44,19 @@ const App = (props) => {
     )
   }
   return (
-    <NavigationContainer>
-      <Stack.Navigator>
-            <Stack.Screen name="Login" component={Login} />
-            <Stack.Screen name="Profile" component={Profile} />
-            <Stack.Screen name="AddListing" component={AddListing} />
-            <Stack.Screen name="Home">
-              {(props) => <Home {...props} user={user} />}
-            </Stack.Screen>
-            <Stack.Screen name="Register" component={Register} />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <ListingProvider>
+      <NavigationContainer>
+        <Stack.Navigator>
+              <Stack.Screen name="Login" component={Login} />
+              <Stack.Screen name="Profile" component={Profile} />
+              <Stack.Screen name="AddListing" component={AddListing} />
+              <Stack.Screen name="Home">
+                {(props) => <Home {...props} user={user} />}
+              </Stack.Screen>
+              <Stack.Screen name="Register" component={Register} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </ListingProvider>
   );
 };
 

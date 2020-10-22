@@ -9,7 +9,7 @@ import {
   } from 'react-native';
   
 const Nav = ( props) => {
-  console.log(props)
+  console.log("NAV",props)
     return(
         <View style={styles.nav}>
         <TouchableOpacity onPress={()=> props.navigation.navigate("Home")} style={styles.navItem}>
