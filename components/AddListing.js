@@ -39,6 +39,7 @@ export default function AddListing(props) {
         }
         const listingsRef = firebase.firestore().collection('listings')
         console.log(data)
+      
         listingsRef
             .add(data).then(() => {
                 setListingsArray(listingsArray => [...listingsArray,data])

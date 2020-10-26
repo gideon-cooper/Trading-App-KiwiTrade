@@ -2,7 +2,7 @@ import React, {useContext} from 'react'
 import { StackActions} from '@react-navigation/native'
 import {firebase} from "../firebase/config"
 import {ListingContext} from "../context/ListingContext"
-import Nav from "./Nav"
+
 import {
     SafeAreaView,
     StyleSheet,
@@ -18,10 +18,8 @@ import {
 
 const Profile = (props) => {
   const [listingArray, setListingsArray] = useContext(ListingContext)
-  console.log(props)
   const handlePress = () => {
     firebase.auth().signOut().then(() => {
-      console.log("HIT")
       props.navigation.reset({
         index: 0,
         routes: [{ name: 'Login' }],
@@ -42,7 +40,6 @@ const Profile = (props) => {
             <View style={styles.button}>
               <Button color='green' onPress={() => handlePress()}title="Log out"></Button>
             </View>
-            <Nav user={props.user} navigation={props.navigation}/>
           </View>
           
         </SafeAreaView>

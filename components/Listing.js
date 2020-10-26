@@ -14,22 +14,27 @@ import {
   Button,
 } from 'react-native';
 
-export default function Listing({listing}) {
-  console.log(listing)
+export default function Listing(props) {
+  console.log(props,"a")
   return (
-    <View style={styles.item}>
-      <View style={styles.imageContainer}>
-        <Image
-          style={styles.image}
-          source={{
-            uri: listing.Image,
-          }}
-        />
-      </View>
-      <View style={styles.itemBottom}>
-        <Text style={styles.title}>{listing.Title}</Text>
-        <Text style={styles.price}>${listing.Price}</Text>
-      </View>
+    <View  style={styles.item}>
+      {/* <TouchableOpacity  > */}
+        <View style={styles.imageContainer}>
+          <TouchableOpacity onPress={()=> props.navigation.navigate("ListingDetails", {props})}>
+            <Image
+            
+            style={styles.image}
+            source={{
+              uri: props.listing.Image,
+            }}
+          />
+          </TouchableOpacity>
+        </View>
+        <View style={styles.itemBottom}>
+          <Text style={styles.title}>{props.listing.Title}</Text>
+          <Text style={styles.price}>${props.listing.Price}</Text>
+        </View>
+      {/* </TouchableOpacity> */}
     </View>
   );
 }

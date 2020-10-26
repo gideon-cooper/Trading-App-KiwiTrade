@@ -23,7 +23,9 @@ const Home = (props) => {
   useEffect(() => {
     firebase.firestore().collection("listings")
       .get().then((listing) => listing.docs.map((item) => {
-        setListingsArray(listingsArray => [...listingsArray,item.data()])
+        console.log(item.id)
+        setListingsArray(listingsArray => [...listingsArray,{id: item.id, ...item.data()}])
+        console.log(listingsArray,"geg")
       }))
   }, [])
   console.log(listings,"geg")
@@ -33,7 +35,7 @@ const Home = (props) => {
       <View style={styles.main}>
         <ScrollView style={styles.itemContainer}>
          {listingsArray.map((listing) => {
-           return <Listing key={listing.Title} listing={listing}/>
+           return <Listing  key={listing.Title} navigation={props.navigation} listing={listing}/>
          })}
         </ScrollView>
       </View>
